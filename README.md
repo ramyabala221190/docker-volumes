@@ -2,21 +2,21 @@ Build the image
 
 docker build -t logging .
 
-Run the image without the volume. you will lose the logs folder if the container is removed
+/var/www is the application route
 
-docker run -d -p 8081:3000 logging
+Docker commands:
 
-Run the image with docker volume
-/var/www is the application root and 
+docker compose build <service-name>
 
-docker run -d -p 8081:3000 logging-node -v logging:/var/www/logs
+docker compose up <service-name>
 
-docker run -d -p 8082:3000 logging-node -v logs:/var/www/logs
+docker compose down <service-name>
 
+docker compose volume ls
 
-Run the image with custom docker volume
+docker compose volume inspect <volume-name>
 
-docker run -d -p 8081:3000 logging -v "${PWD}"/logs:/var/www/logs
+docker system prune
 
-docker compose -f docker-compose.yml build
+docker ps -a
 

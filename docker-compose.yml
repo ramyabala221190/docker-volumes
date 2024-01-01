@@ -1,0 +1,63 @@
+services:
+   dev-node:
+     container_name: logging-node-dev-container
+     image: logging-node-dev
+     volumes:
+        - type : volume
+          source: mynodelogs
+          target: /var/www/logs
+     environment:
+       - NODE_ENV='development'
+     build:
+       context: .
+       dockerfile: Dockerfile
+     ports:
+       - 8081:3000
+
+   uat-node:
+     container_name: logging-node-uat-container
+     image: logging-node-uat
+     environment:
+       - NODE_ENV='uat'
+     volumes:
+        - type : volume 
+          source: mynodelogs
+          target : /var/www/logs
+     build:
+       context: .
+       dockerfile: Dockerfile
+     ports:
+       - 8082:3000
+  
+   qa-node:
+     container_name: logging-node-qa-container
+     image: logging-node-qa
+     environment:
+       - NODE_ENV='qa'
+     volumes:
+        - type : bind 
+          source: logs
+          target : /var/www/logs
+     build:
+       context: .
+       dockerfile: Dockerfile
+     ports:
+       - 8083:3000
+    
+   prod-node:
+     container_name: logging-node-prod-container
+     image: logging-node-prod
+     environment:
+       - NODE_ENV='production'
+     volumes:
+        - type : bind
+          source: logs
+          target: /var/www/logs
+     build:
+       context: .
+       dockerfile: Dockerfile
+     ports:
+       - 8084:3000
+
+volumes:
+  mynodelogs:  
